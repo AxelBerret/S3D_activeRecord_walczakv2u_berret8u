@@ -105,7 +105,7 @@ public class Personne {
         // creation de la connexion
         Connection connect = DBConnection.getConnection();
         // preparation de le requete SQL
-        String SQL = "SELECT * FROM Personne WHERE id = pId;";
+        String SQL = "SELECT * FROM Personne WHERE id = "+pId+";";
         PreparedStatement ps = connect.prepareStatement(SQL);
         ps.execute();
         ResultSet rs = ps.getResultSet();
@@ -133,7 +133,7 @@ public class Personne {
         // creation de la connexion
         Connection connect = DBConnection.getConnection();
         // preparation de le requete SQL
-        String SQL = "SELECT * FROM Personne WHERE nom = pNom;";
+        String SQL = "SELECT * FROM Personne WHERE nom LIKE '"+pNom+"';";
         PreparedStatement ps = connect.prepareStatement(SQL);
         ps.execute();
         ResultSet rs = ps.getResultSet();
