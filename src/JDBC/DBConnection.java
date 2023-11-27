@@ -10,7 +10,11 @@ public class DBConnection {
     /**
      * déclarations des attributs
      */
-    private String userName,password, serverName,portNumber, dbName;
+    private String userName;
+    private String password;
+    private String serverName;
+    private String portNumber;
+    private static String dbName;
     private static Connection connection;
 
     /**
@@ -55,11 +59,14 @@ public class DBConnection {
      * @param nomDB
      * @throws SQLException
      */
-    public void setNomDB(String nomDB) throws SQLException {
-        if(!nomDB.equals(this.dbName)){
-            this.dbName=nomDB;
-            new DBConnection();
+    public static void setNomDB(String nomDB) throws SQLException {
+        if(dbName!=null&&!nomDB.equals(dbName)){
+            dbName=nomDB;
+            connection=null;
         }
     }
 
+    public static String getNomDB() {
+        return dbName;
+    }
 }
