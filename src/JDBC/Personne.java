@@ -26,4 +26,19 @@ public class Personne {
         this.nom = pNom;
         this.prenom = pPrenom;
     }
+
+
+    /**
+     * methode getNom de la classe Personne
+     * @return attribut nom
+     */
+    public String getNom() {return this.nom;}
+
+    /**
+     * methode getPrenom de la classe Personne
+     * @return attribut prenom
+     */
+    public String getPrenom() {return this.prenom;}
+
+
 }
