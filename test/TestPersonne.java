@@ -55,4 +55,25 @@ public class TestPersonne {
             assertEquals(listeVerification.get(i).getPrenom(), Personne.findByName("Spielberg").get(i).getPrenom());
         }
     }
+
+    @Test
+    public void test_05_save_saveNew() throws SQLException {
+        Personne p6 = new Personne("Scorsese", "Martin");
+        assertEquals(-1, p6.getId());
+        p6.save();
+        assertEquals(6, p6.getId());
+    }
+
+    @Test
+    public void test_06_save_update() throws SQLException {
+        Personne p6 = new Personne("Scorsese", "Martin");
+        p6.setNom("Campbell");
+        p6.save();
+        assertEquals(6, Personne.findByName("Campbell").get(0).getId());
+    }
+
+    @Test
+    public void test_07_delete() throws SQLException {
+
+    }
 }

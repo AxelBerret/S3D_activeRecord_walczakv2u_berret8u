@@ -62,6 +62,20 @@ public class Personne {
      */
     public String getPrenom() {return this.prenom;}
 
+    /**
+     * methode setNom de la classe Personne
+     * modifie le nom courant par celui en parametres
+     * @param pNom nom courant que l on souhaite avoir
+     */
+    public void setNom(String pNom) {this.nom = pNom;}
+
+    /**
+     * methode setPrenom de la classe Personne
+     * modifie le prenom courant par celui en parametres
+     * @param pPrenom prenom courant que l on souhaite avoir
+     */
+    public void setPrenom(String pPrenom) {this.prenom = pPrenom;}
+
 
     /**
      * methode findAll de la classe Personne
@@ -146,5 +160,67 @@ public class Personne {
             listePersonnes.add(p);
         }
         return listePersonnes;
+    }
+
+    /**
+     * methode saveNew de la classe Personne
+     * qui permet d enregistrer dans la base de donnees une nouvelle
+     * personne
+     * @throws SQLException
+     */
+    private void saveNew() throws SQLException {
+        // creation de la connexion
+        Connection connect = DBConnection.getConnection();
+        // preparation de la requete SQL
+        String SQL = "INSERT INTO Personne (nom, prenom) VALUES ("+this.nom+","+this.prenom+");";
+        // recuperation de la derniere ligne ajoutee (auto increment)
+        PreparedStatement ps = connect.prepareStatement(SQL,Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            this.id = rs.getInt(1);
+        }
+        ps.executeUpdate();
+    }
+
+    /**
+     * methode update de la classe Personne
+     * qui permet de modifier les informations d une personne dans
+     * la base de donnees
+     * @throws SQLException
+     */
+    private void update() throws SQLException {
+        // creation de la connexion
+        Connection connect = DBConnection.getConnection();
+        // preparation de la requete SQL
+        String SQL =
+            "UPDATE Personne SET nom = '"+this.nom+"', prenom = '"+this.prenom+"' WHERE id = "+this.id+";";
+        PreparedStatement ps = connect.prepareStatement(SQL);
+        ps.execute();
+    }
+
+    /**
+     * methpde save de la classe Personne
+     * qui permet d utiliser soit la methode saveNew soit la methode
+     * update en fonction de l identifiant de la personne
+     * @throws SQLException
+     */
+    public void save() throws SQLException {
+        if (this.id != -1) this.update();
+        else this.saveNew();
+    }
+
+    /**
+     * methode delete de la classe Personne
+     * qui permet de supprimer une personne de la base de données
+     * @throws SQLException
+     */
+    public void delete() throws SQLException {
+        // creation de la connexion
+        Connection connect = DBConnection.getConnection();
+        // preparation de la requete SQL
+        String SQL =
+            "DELETE FROM Personne WHERE Nom LIKE '"+this.nom+"' and Prenom LIKE '"+this.prenom+"';";
+        PreparedStatement ps = connect.prepareStatement(SQL);
+        ps.execute();
     }
 }
